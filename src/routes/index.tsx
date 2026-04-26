@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
 import heroImage from "../assets/cinematic-editor-hero.jpg";
 import portraitImage from "../assets/mohammad-portrait.png";
@@ -7,35 +8,32 @@ import hypertrophyImage from "../assets/work-hypertrophy.jpg";
 import shortFormImage from "../assets/work-short-form.jpg";
 import youtubeImage from "../assets/work-youtube.jpg";
 
+
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const logos = ["ApexFit", "CreatorLab", "Northstar", "Pulse Media", "Framehaus"];
+const logos = ["Remarc IO", "Web Tech Sol", "Atwics Group", "Estate Hives", "7 Star Group"];
 
 const projects = [
   {
-    title: "The Science of Hypertrophy",
-    category: "Fitness & Educational Documentary",
-    image: hypertrophyImage,
+    Client: "Estate Hives",
+    url: "https://www.youtube.com/embed/RvgNSh5cF8A?si=gOEDlYXSXPb5mw_U",
     className: "md:mt-20",
   },
   {
-    title: "High-Retention YouTube Strategy",
-    category: "Fast-Paced Edits & Motion Graphics",
-    image: youtubeImage,
+    Client: "7 Star Group",
+    url: "https://www.youtube.com/embed/8SJqZbNmY5Y?si=rOelOsw9xsXfO_5T",
     className: "md:mt-0",
   },
   {
-    title: "Cinematic Brand Anthem",
-    category: "Commercial Editing & Color Grading",
-    image: brandAnthemImage,
+    Client: "Transform and Strength",
+    url: "https://www.youtube.com/embed/nATu5T_8pGM?si=Cxbj5tdHCc97O4q1",
     className: "md:mt-12",
   },
   {
-    title: "Viral Short-Form Content",
-    category: "Reels, TikToks & Shorts",
-    image: shortFormImage,
+    Client: "Client 4",
+    url: "https://www.youtube.com/embed/N7RXaItP7aI?si=uJwJi9IPA94c2Goe",
     className: "md:mt-32",
   },
 ];
@@ -46,6 +44,76 @@ const expertise = [
   "Color Grading & Audio Design",
   "YouTube Strategy & Retention Optimization",
 ];
+
+function AboutGoalCard() {
+  const [contentView, setContentView] = useState<'about' | 'goal'>('about');
+  const [isOpen, setIsOpen] = useState(true);
+  const isAbout = contentView === 'about';
+
+  return (
+    <div className="rounded-[2rem] border border-border bg-card p-8 shadow-cinematic">
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <button
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+          className="text-left font-black uppercase tracking-[0.18em] text-foreground transition hover:text-electric"
+        >
+          {isOpen ? 'Hide' : 'Open'} {isAbout ? 'About' : 'Goal'}
+        </button>
+        <button
+          type="button"
+          onClick={() => setContentView(isAbout ? 'goal' : 'about')}
+          className="inline-flex h-12 items-center justify-center rounded-full border border-primary bg-background px-5 text-sm font-black uppercase tracking-[0.16em] text-primary transition hover:border-electric hover:bg-electric/10 focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          {isAbout ? 'Show Goal' : 'Show About'}
+        </button>
+      </div>
+
+      <div className="rounded-3xl border border-border/70 bg-background/80 p-8">
+        <h2 className="cinematic-title text-4xl leading-none md:text-6xl">
+          {isAbout ? 'About Mohammad Tahfoor Riaz' : 'Goal'}
+        </h2>
+
+        {isOpen && (
+          <div className="mt-8 space-y-6 text-base leading-8 text-muted-foreground md:text-lg">
+            {isAbout ? (
+              <>
+                <p>
+                  I make videos that help brands to tell their feelings in the form of stories.
+                </p>
+                <p>A few things about me.</p>
+                <ul className="space-y-3 pl-6 text-sm leading-7 md:text-base">
+                  <li>• left home in covid to build my own company. with 2$ in pocket</li>
+                  <li>• graduated from college and went straight to capital of Pakistan to work for marketing agency. Remarc io.</li>
+                  <li>• Worked with 20 real state agents help them to sell worth millions.</li>
+                  <li>• Taught myself story telling, color grading and motion graphics</li>
+                  <li>• went from zero to 100k in just 2 months at the age of 18.</li>
+                  <li>• I like telling stories, beautifull mountains, making movies.</li>
+                  <li>• I have a faith in action and won 7 races of 100 meter in a row.</li>
+                  <li>• my music taste: orchestra, classic music.</li>
+                </ul>
+              </>
+            ) : (
+              <>
+                <p>Goal:</p>
+                <p>• I want to make things that feel personal and people remember for long period of time.</p>
+                <p>Not just motivation that disappears in a day,</p>
+                <p>but perspective.</p>
+                <p>A shift.</p>
+                <p>Something that changes how someone sees themselves or the world.</p>
+                <p>
+                  I care about building things that last — ideas, films, experiences, communities, perspectives.
+                </p>
+                <p>Work that leaves a mark.</p>
+                <p>“If it doesn’t move you, it won’t move them.” — Rick Rubin</p>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function Index() {
   return (
@@ -62,7 +130,7 @@ function Index() {
         <div className="absolute inset-0 film-grain opacity-30" />
         <div className="relative z-10 mx-auto max-w-7xl text-center reveal-up">
           <p className="mb-6 text-xs font-bold uppercase tracking-[0.38em] text-electric md:text-sm">
-            Professional Video Editor & Motion Designer
+            Professional Video Editor & Story Teller
           </p>
           <h1 className="cinematic-title text-[clamp(3.2rem,12vw,10.5rem)] leading-[0.82] text-foreground drop-shadow-2xl">
             Mohammad Tahfoor Riaz
@@ -103,21 +171,19 @@ function Index() {
         </div>
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           {projects.map((project, index) => (
-            <article key={project.title} className={`${project.className} group reveal-up`} style={{ animationDelay: `${index * 90}ms` }}>
+            <article key={project.Client} className={`${project.className} group reveal-up`} style={{ animationDelay: `${index * 90}ms` }}>
               <div className="relative overflow-hidden border border-border bg-card shadow-cinematic">
-                <img
-                  src={project.image}
-                  alt={`${project.title} video thumbnail`}
-                  width={1280}
-                  height={800}
-                  loading="lazy"
-                  className="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105 group-hover:opacity-90"
+                <iframe
+                  src={project.url}
+                  title={`Video for ${project.Client}`}
+                  frameBorder="0"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="aspect-[16/9] max-h-[280px] w-full object-cover transition duration-700 group-hover:scale-105 group-hover:opacity-90"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-70" />
-                <div className="absolute right-5 top-5 h-10 w-10 rounded-full border border-primary/60 bg-background/40 backdrop-blur-sm transition duration-300 group-hover:border-electric group-hover:bg-electric/20" />
               </div>
-              <h3 className="mt-5 text-2xl font-black uppercase text-foreground md:text-3xl">{project.title}</h3>
-              <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-electric">{project.category}</p>
+              <h3 className="mt-5 text-2xl font-black uppercase text-foreground md:text-3xl">{project.Client}</h3>
             </article>
           ))}
         </div>
@@ -137,21 +203,7 @@ function Index() {
             />
           </div>
           <div>
-            <h2 className="cinematic-title text-5xl leading-none md:text-7xl">About Mohammad Tahfoor Riaz</h2>
-            <div className="mt-8 space-y-6 text-base leading-8 text-muted-foreground md:text-lg">
-              <p>
-                I am a professional video editor with over 3 years of dedicated experience crafting high-impact digital content. Specializing in advanced post-production, motion graphics, and dynamic visual storytelling, I transform raw footage into highly engaging, retention-driven narratives.
-              </p>
-              <p>
-                My expertise lies at the intersection of technical precision and creative pacing. Utilizing industry-standard tools like Adobe Premiere Pro, After Effects, and CapCut, I build visual experiences designed to capture attention and maximize audience engagement, particularly within the competitive USA and UK digital landscapes. Whether it's high-tension fitness documentaries or fast-paced YouTube content, I shape the narrative to leave a lasting impact.
-              </p>
-            </div>
-            <a
-              href="mailto:hello@example.com"
-              className="mt-9 inline-flex min-h-12 items-center justify-center bg-primary px-8 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground transition duration-300 hover:bg-electric hover:text-electric-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-            >
-              Let's Collaborate
-            </a>
+            <AboutGoalCard />
           </div>
         </div>
       </section>
@@ -173,13 +225,13 @@ function Index() {
 
       <footer className="border-t border-border px-5 py-10">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 text-sm font-bold uppercase tracking-[0.14em] text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Mohammad Tahfoor Riaz. All Rights Reserved.</p>
+          <p>Contact me at: +92 345 8588294, +92 348 7472609</p>
           <nav className="flex flex-wrap gap-5">
             {[
-              ["Email", "mailto:hello@example.com"],
-              ["Upwork Profile", "#"],
-              ["LinkedIn", "#"],
-              ["YouTube", "#"],
+              ["Email", "mailto:tahfoorriaz25@gmail.com"],
+              ["Upwork Profile", "https://www.upwork.com/freelancers/~01719ee328e588d534"],
+              ["LinkedIn", "https://www.linkedin.com/in/mohammed-tahfoor-riaz-49790a33a/"],
+              ["Instagram", "https://www.instagram.com/mtahfoorriaz/"],
             ].map(([label, href]) => (
               <a key={label} href={href} className="transition hover:text-electric focus:outline-none focus:ring-2 focus:ring-ring">
                 {label}
